@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> ombd Document</title>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        img {
+            width: 80%;
+            height: 300px;
+            padding-top: 10px;
+            cursor: pointer;
+        }
+
+        /* img:hover{
+            height: 500px;
+            width: 100%;
+        } */
+
+        #display {
+            display: flex;
+            padding-left: 350px;
+        }
+
+        #left {
+            padding-top: 50px;
+            text-align-last: left;
+            padding-right: 10px;
+            width: 30%;
+        }
+
+        #grid_view {
+            padding-left: 3%;
+
+            display: grid;
+            grid-template-columns: auto auto auto;
+            grid-gap: 5%;
+
+        }
+
+        #left {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>my movie list</h1>
+    <input type="text" id="name">
+    <button id=" search" onclick="movieData()">Search</button>
+
+    <div id="display">
+        <div id="left"></div>
+        <div id="right"></div>
+    </div>
+    <div id="grid_view">
+        <div id="one"></div>
+        <div id="two"></div>
+        <div id="three"></div>
+        <div id="four"></div>
+        <div id="five"></div>
+        <div id="six"></div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+
+    let display = document.getElementById('display');
+
+    let grid_view = document.getElementById('grid_view');
+
+    let left = document.getElementById('left');
+
+    let right = document.getElementById('right');
+
+    let div = document.createElement('div');
+
+    async function movieData() {
+        try {
+            let name = document.getElementById('name').value;
+            let key = "79b28b8f";
+            let url = `http://www.omdbapi.com/?t=${name}&apikey=${key}`;
+
+            let res = await fetch(url);
+            let data = await res.json();
+
+            let user = data;
+            console.log('recieve:', user)
+            appendMovie(user);
+            console.log('data:', data)
+        }
+        catch (err) {
+            console.log('err:', err)
+
+        }
+    }
+
+    function appendMovie(arr) {
+
+
+        let poster = document.createElement('img');
+        poster.src = arr.Poster;
+
+        let ratings = document.createElement('p');
+        ratings.innerText = `Rating : ${arr.imdbRating}`;
+
+        let recomended = document.createElement('p')
+
+        if (arr.imdbRating >= 8.5) {
+
+            recomended.innerText = "********Recomended*********"
+        }
+
+
+        let year = document.createElement('p');
+        year.innerText = `Year of Release : ${arr.Year}`;
+
+        let actors = document.createElement('p');
+        actors.innerText = `CAST : ${arr.Actors}`;
+
+        let plot = document.createElement('p');
+        plot.innerText = `Description : ${arr.Plot}`;
+
+        let title = document.createElement('p');
+        title.textContent = `NAME : ${arr.Title}`;
+
+        left.append(title, actors, ratings, year, plot, recomended);
+
+
+        right.append(poster);
+
+        display.append(left, right);
+
+    }
+
+
+
+    let one = document.createElement('img');
+    one.src = "https://rukminim1.flixcart.com/image/416/416/k0h12fk0/poster/g/3/t/medium-joker-movie-poster-for-room-office-13-inch-x-19-inch-original-imafk9kg4hczamuz.jpeg?q=70"
+
+    let two = document.createElement('img');
+    two.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbv5Fjg0nCZHXnVixZUkPNeUTtF1jLa4VLAQ&usqp=CAU"
+
+    let three = document.createElement('img');
+    three.src = "https://th.bing.com/th/id/OIP.5vyka6fZwwD6z8hdAZ5NrQHaG7?w=190&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+
+    let four = document.createElement('img');
+    four.src = "https://media.comicbook.com/2017/10/iron-man-movie-poster-marvel-cinematic-universe-1038878.jpg"
+
+    let five = document.createElement('img');
+    five.src = "https://th.bing.com/th/id/OIP.lRn8zz5GpZ7YbAmzHkbu3gHaNK?w=115&h=180&c=7&r=0&o=5&dpr=1.25&pid=1.7"
+
+    let six = document.createElement('img');
+    six.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyOldcwfAx6u47F31ldPGgk0GV7waSR1VjNA&usqp=CAU"
+
+    let seven = document.createElement('img');
+    seven.src = 'https://cdn.shopify.com/s/files/1/0969/9128/products/Midway_2019_-_Ed_Skrein_-_Hollywood_War_WW2_Movie_Poster_1b5a2ed8-4cd4-4b6b-8438-94e63cd268be.jpg?v=1582782834'
+
+    let eight = document.createElement('img');
+    eight.src = "https://rukminim1.flixcart.com/image/416/416/jfea93k0/poster/j/3/u/medium-the-avenges-initiative-3-moives-posters-mp0098-original-imaf3mhpcyhwhtkt.jpeg?q=70"
+
+    let nine = document.createElement('img');
+    nine.src = "https://sm.ign.com/t/ign_in/gallery/s/spider-man/spider-man-far-from-home-official-movie-posters_epch.1080.jpg"
+
+
+    grid_view.append(three, four, five, six, seven, one, two, eight, nine);
+
+
+</script>
